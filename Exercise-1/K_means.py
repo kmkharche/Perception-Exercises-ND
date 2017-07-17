@@ -1,4 +1,4 @@
-#!usr/bin/env python
+#!usr/bin/env ipython
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -44,11 +44,11 @@ data = np.float32((np.concatenate(clusters_x), np.concatenate(clusters_y))).tran
 
 # Define k-means parameters
 # Number of clusters to define
-k_clusters = 7
+k_clusters = 6
 # Maximum number of iterations to perform
 max_iter = 100
 # Accuracy criterion for stopping iterations
-epsilon = 0.1
+epsilon = 0.01
 # Define criteria in OpenCV format
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
 # Call k-means algorithm on your dataset
