@@ -36,12 +36,12 @@ def pcl_callback(pcl_msg):
     segmented.set_method_type(pcl.SAC_RANSAC)
     threshold = 0.01
     segmented.set_distance_threshold(threshold)
-    inliers,coefficients = semented.segment()
+    inliers,coefficients = segmented.segment()
 
     # TODO: Extract inliers and outliers
 
-    extracted_inliers = cloud_passthrough.extract(inliers, negative = False)
-    extracted_outliers = cloud_passthrough.extracct(inliers, negative = True)
+    cloud_table = cloud_passthrough.extract(inliers, negative = False)
+    cloud_objects = cloud_passthrough.extract(inliers, negative = True)
 
     # TODO: Euclidean Clustering
 
@@ -49,9 +49,12 @@ def pcl_callback(pcl_msg):
 
     # TODO: Convert PCL data to ROS messages
 
+    ros_cloud_table = pcl_to_ros(cloud_table)
+    ros_cloud_objects = pcl_to_ros(cloud_objects)
+
     # TODO: Publish ROS messages
-    pcl_objects_pub.publish(pcl_msg)
-    pcl_table_pub.publish(pcl_msg)
+    pcl_objects_pub.publish(ros_cloud_objects)
+    pcl_table_pub.publish(ros_cloud_table)
 
 
 if __name__ == '__main__':
