@@ -9,6 +9,7 @@ from pcl_helper import *
 def pcl_callback(pcl_msg):
 
     # TODO: Convert ROS msg to PCL data
+
     pcl_cloud=ros_to_pcl(pcl_msg)
 
     # TODO: Voxel Grid Downsampling
@@ -16,13 +17,21 @@ def pcl_callback(pcl_msg):
     vox=pcl_cloud.make_voxel_grid_filter()
     leafSize = 0.01
     vox.set_leaf_size(leafSize, leafSize, leafSize)
-    pxl_vox=vox.filter()
+    cloud_vox=vox.filter()
 
     # TODO: PassThrough Filter
 
+    passthrough=cloud_vox.make_passthrough_filter()
+    filter_axis='z'
+    passthrough.set_filter_field_name (filter_axis)
+    axis_min = 0.6
+    axis_max = 1.1
+    passthrough.set_filter_limits (axis_min, axis_max)
+    cloud_passthrough = passthrough.filter()
 
     # TODO: RANSAC Plane Segmentation
 
+    
     # TODO: Extract inliers and outliers
 
     # TODO: Euclidean Clustering
