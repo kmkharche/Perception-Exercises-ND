@@ -9,8 +9,14 @@ from pcl_helper import *
 def pcl_callback(pcl_msg):
 
     # TODO: Convert ROS msg to PCL data
+    pcl_cloud=ros_to_pcl(pcl_msg)
 
     # TODO: Voxel Grid Downsampling
+
+    vox=pcl_cloud.make_voxel_grid_filter()
+    leafSize = 0.01
+    vox.set_leaf_size(leafSize, leafSize, leafSize)
+    pxl_vox=vox.filter()
 
     # TODO: PassThrough Filter
 
