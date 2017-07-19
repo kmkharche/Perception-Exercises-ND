@@ -31,8 +31,17 @@ def pcl_callback(pcl_msg):
 
     # TODO: RANSAC Plane Segmentation
 
-    
+    segmented = cloud_passthrough.make_segmenter()
+    segmented.set_model_type(pcl.SACMODEL_PLANE)
+    segmented.set_method_type(pcl.SAC_RANSAC)
+    threshold = 0.01
+    segmented.set_distance_threshold(threshold)
+    inliers,coefficients = semented.segment()
+
     # TODO: Extract inliers and outliers
+
+    extracted_inliers = cloud_passthrough.extract(inliers, negative = False)
+    extracted_outliers = cloud_passthrough.extracct(inliers, negative = True)
 
     # TODO: Euclidean Clustering
 
