@@ -45,6 +45,24 @@ def pcl_callback(pcl_msg):
 
     # TODO: Euclidean Clustering
 
+    white_cloud = XYZRGB_to_RGB(cloud_objects)
+    tree = white_cloud.make_kdtree()
+
+    # 	Create a cluster extraction object
+    ec = white_cloud.make_EuclideanClusterExtraction()
+
+    # 	Set tolerances for distance threshold 
+    # 	as well as minimum and maximum cluster size (in points)
+    ec.set_ClusterTolerance(1)
+    ec.set_MinClusterSize(10)
+    ec.set_MaxClusterSize(250)
+
+    # 	Search the k-d tree for clusters
+    ec.set_SearchMethod(tree)
+
+    # 	Extract indices for each of the discovered clusters
+    cluster_indices = ec.Extract()
+
     # TODO: Create Cluster-Mask Point Cloud to visualize each cluster separately
 
     # TODO: Convert PCL data to ROS messages
