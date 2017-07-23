@@ -45,24 +45,25 @@ def pcl_callback(pcl_msg):
 
     # TODO: Euclidean Clustering
 
-    white_cloud = XYZRGB_to_RGB(cloud_objects)
+    white_cloud = XYZRGB_to_XYZ(cloud_objects)
+#    print(white_cloud)
     tree = white_cloud.make_kdtree()
-
+    
     # 	Create a cluster extraction object
     ec = white_cloud.make_EuclideanClusterExtraction()
 
     # 	Set tolerances for distance threshold 
     # 	as well as minimum and maximum cluster size (in points)
-    ec.set_ClusterTolerance(1)
-    ec.set_MinClusterSize(10)
-    ec.set_MaxClusterSize(250)
+    ec.set_ClusterTolerance(0.05)
+    ec.set_MinClusterSize(50)
+    ec.set_MaxClusterSize(5000)
 
     # 	Search the k-d tree for clusters
     ec.set_SearchMethod(tree)
 
     # 	Extract indices for each of the discovered clusters
     cluster_indices = ec.Extract()
-
+ #   print (cluster_indices)
     # TODO: Create Cluster-Mask Point Cloud to visualize each cluster separately
 
     #Assign a color corresponding to each segmented object in scene
@@ -76,7 +77,7 @@ def pcl_callback(pcl_msg):
                 	                         white_cloud[indice][1],
                         	                 white_cloud[indice][2],
                                 	         rgb_to_float(cluster_color[j])])
-
+    
     #Create new cloud containing all clusters, each with unique color
     cluster_cloud = pcl.PointCloud_PointXYZRGB()
     cluster_cloud.from_list(color_cluster_point_list)
@@ -104,6 +105,7 @@ if __name__ == '__main__':
     # TODO: Create Publishers
     pcl_objects_pub = rospy.Publisher("/pcl_objects", PointCloud2, queue_size=1)
     pcl_table_pub = rospy.Publisher("/pcl_table", PointCloud2, queue_size=1)
+    pcl_cluster_pub = rospy.Publisher("/pcl_cluster", PointCloud2, queue_size=1)
 
     # Initialize color_list
     get_color_list.color_list = []
