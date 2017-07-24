@@ -66,6 +66,7 @@ def pcl_callback(pcl_msg):
  #   print (cluster_indices)
     # TODO: Create Cluster-Mask Point Cloud to visualize each cluster separately
 
+<<<<<<< HEAD
     #Assign a color corresponding to each segmented object in scene
     cluster_color = get_color_list(len(cluster_indices))
 
@@ -82,6 +83,25 @@ def pcl_callback(pcl_msg):
     cluster_cloud = pcl.PointCloud_PointXYZRGB()
     cluster_cloud.from_list(color_cluster_point_list)
     
+||||||| merged common ancestors
+=======
+    #Assign a color corresponding to each segmented object in scene
+    cluster_color = get_color_list(len(cluster_indices))
+
+    color_cluster_point_list = []
+
+    for j, indices in enumerate(cluster_indices):
+    	for i, indice in enumerate(indices):
+        	color_cluster_point_list.append([white_cloud[indice][0],
+                	                         white_cloud[indice][1],
+                        	                 white_cloud[indice][2],
+                                	         rgb_to_float(cluster_color[j])])
+
+    #Create new cloud containing all clusters, each with unique color
+    cluster_cloud = pcl.PointCloud_PointXYZRGB()
+    cluster_cloud.from_list(color_cluster_point_list)
+    
+>>>>>>> 550c305225b7f6250510bd39cf51f819280834fd
     # TODO: Convert PCL data to ROS messages
 
     ros_cloud_table = pcl_to_ros(cloud_table)
