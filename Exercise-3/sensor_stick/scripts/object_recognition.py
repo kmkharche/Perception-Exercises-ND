@@ -128,7 +128,7 @@ def pcl_callback(pcl_msg):
         # Extract histogram features
         # TODO: complete this step just as you did before in capture_features.py
 
-        chists = compute_color_histograms(ros_cluster, using_hsv=False)
+        chists = compute_color_histograms(ros_cluster, using_hsv=True)
         normals = get_normals(ros_cluster)
 	nhists = compute_normal_histograms(normals)
         feature = np.concatenate((chists, nhists))
@@ -154,7 +154,6 @@ def pcl_callback(pcl_msg):
 
     # Publish the list of detected objects
     # This is the output you'll need to complete the upcoming project!
-    detected_objects_pub.publish(detected_objects)
 
         # Grab the points for the cluster
 
