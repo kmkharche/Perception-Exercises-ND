@@ -153,19 +153,6 @@ def pcl_callback(pcl_msg):
     rospy.loginfo('Detected {} objects: {}'.format(len(detected_objects_labels), detected_objects_labels))
 
     # Publish the list of detected objects
-    # This is the output you'll need to complete the upcoming project!
-
-        # Grab the points for the cluster
-
-        # Compute the associated feature vector
-
-        # Make the prediction
-
-        # Publish a label into RViz
-
-        # Add the detected object to the list of detected objects.
-
-    # Publish the list of detected objects
     detected_objects_pub.publish(detected_objects)
 
 if __name__ == '__main__':
